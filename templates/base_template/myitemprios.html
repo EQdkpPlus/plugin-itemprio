@@ -1,0 +1,48 @@
+<div class="contentHeader">
+	<h1 class="contentTitle">{L_ip_myitemprios}</h1>
+</div>
+<form method="post" action="{ACTION}" name="post">
+	{L_event}: {EVENT_DROPDOWN} <!-- IF S_IP_TWINKS -->&bull; {L_member}: {IP_CHARACTER_DROPDOWN}<!-- ENDIF -->
+		
+	<!-- IF EVENT_ID -->
+	<br /><br />
+	<!-- IF S_HINT_ALLGONE AND EVENT_ID -->
+<div class="infobox infobox-large infobox-blue clearfix">
+	<i class="fa fa-info-circle fa-2x pull-left"></i> {L_ip_hint_allgone}
+</div>
+<!-- ENDIF -->
+	<table class="table fullwidth colorswitch" id="itempriosort">
+	<tr>
+		<th style="width:30px">#</th>
+		<th style="width:50%">{L_ip_itemname}</th>
+		<th style="width:50%">{L_ip_itemid}</th>
+	</tr>
+	<!-- BEGIN item_row -->
+	<tr>
+		<td style="width:30px" class="nowrap"><!-- IF S_IP_CHANGE_PRIO --> <i class="fa fa-arrows-v fa-lg hand" title="{L_ip_dragndrop}"></i>&nbsp;&nbsp;&nbsp;<span class="prioNumber"></span><input type="hidden" name="item[{item_row.HASH}][sort][]"><!-- ENDIF --></td>
+		<td> <!-- IF item_row.S_IP_CHANGE --><input type="text" name="item[{item_row.HASH}][name]" style="width:90%;" value="{item_row.NAME}" required id="item_{item_row.HASH}"><!-- ELSE --><input type="text" name="item[{item_row.HASH}][name]" style="display:none;" value="{item_row.NAME}"> <!-- IF item_row.GIVEN --><strike><!-- ENDIF -->{item_row.NAME_TT}<!-- IF item_row.GIVEN --></strike><!-- ENDIF --><!-- ENDIF --></td>
+		<td> <!-- IF item_row.S_IP_CHANGE --><input type="text" name="item[{item_row.HASH}][gameid]" style="width:90%;" value="{item_row.GAMEID}"><!-- ELSE -->{item_row.GAMEID}<!-- ENDIF --></td>
+	</tr>
+	<!-- END item_row -->
+</table>
+
+<!-- IF S_IP_CHANGE_PRIO -->
+<div class="contentFooter">
+	<button class="mainoption" type="submit" name="save"><i class="fa fa-check"></i>{L_save}</button>
+</div>
+<!-- ENDIF -->
+<!-- ENDIF -->
+
+{CSRF_TOKEN}
+</form>
+
+<script>
+function numerize(){
+		var start = 1;
+		$('#itempriosort').find('.prioNumber').each(function(){
+			$(this).html(start + '.');
+			start++;
+		});
+	
+}
+</script>

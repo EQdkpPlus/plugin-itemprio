@@ -1,0 +1,76 @@
+<div class="contentHeader">
+	<h1 class="contentTitle">{L_ip_itemprios}</h1>
+</div>
+<!-- IF S_IP_CANUSE -->
+<div class="tableHeader floatRight">
+		<button type="button" name="add" class="mainoption" onclick="window.location='{CONTROLLER_PATH}MyItemprios/{SID}'" ><i class="fa fa-list-ol"></i>{L_ip_myitemprios}</button>
+</div>
+<!-- ENDIF -->
+<form method="post" action="{ACTION}" name="post">
+	{L_event}: {EVENT_DROPDOWN}<!-- IF EVENT_ID -->{L_date}: {START_PICKER} <button type="submit"><i class="fa fa-filter"></i></button> <input type="text" placeholder="{L_ip_searchitem}" onkeyup="search_item(this.value)"/><!-- ENDIF -->
+	<!-- IF EVENT_ID -->
+	<table class="table fullwidth colorswitch" id="itempriosort">
+	<tr class="ip-no-search">
+		<th style="width:50%">{L_ip_itemname}</th>
+		<th style="width:50%">{L_members}</th>
+		<!-- IF S_DISTRIBUTE -->
+		<th style="width:50%">{L_action}</th>
+		<!-- ENDIF -->
+	</tr>
+	<!-- BEGIN item_row -->
+	<tr>
+		<td><span class="ip-itemname">{item_row.ITEM}<span class="ip-itemid" style="display:none;">{item_row.ITEMID}</span></span></td>
+		<td>
+			<!-- BEGIN buyer_row -->
+			<div>
+				{item_row.buyer_row.BUYER}
+			</div>
+			<!-- END buyer_row -->
+		</td>
+		
+		<!-- IF S_DISTRIBUTE -->
+		
+		<td><!-- IF item_row.COUNT > 1 -->
+			<button type="submit" name="throw" value="<!-- BEGIN buyer_row -->{item_row.buyer_row.ID},<!-- END buyer_row -->"><i class="fa fa-cube"></i></button>
+			
+			<!-- ELSE -->
+			<!-- BEGIN buyer_row -->
+			<button type="submit" name="save" value="{item_row.buyer_row.ID}"><i class="fa fa-check"></i></button>
+			<!-- END buyer_row -->
+			<!-- ENDIF -->
+		</td>
+		
+		<!-- ENDIF -->
+	</tr>
+	<!-- END item_row -->
+</table>
+<!-- ENDIF -->	
+{CSRF_TOKEN}
+</form>
+
+<script>
+function search_item(searchvalue){
+	searchvalue = searchvalue.toLowerCase();
+	
+	if(searchvalue.length > 0){
+		$('#itempriosort tr').each(function(){
+			console.log(this);
+			
+			var itemname = $(this).find('.ip-itemname').html();
+			if(itemname){
+			
+				itemname = itemname.toLowerCase();
+				if(itemname.indexOf(searchvalue) >= 0){
+					$(this).show();
+				} else {
+					$(this).hide();
+				}
+			}
+			
+		});
+	} else {
+		$('#disabled li').show();
+	}
+	
+}
+</script>
