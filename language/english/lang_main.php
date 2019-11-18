@@ -53,6 +53,8 @@ $lang = array(
 	'ip_given_success'			=> 'The item \'%1$s\' was given to %2$s.',
 	'ip_notify_new_item'		=> 'You have received the Item \'{PRIMARY}\' from your priority list.',
 	'ip_notify_new_item_grouped' => 'You have received {COUNT} from your priority lists.',
+	'ip_throw'					=> 'Randomly give item',
+	'ip_give'					=> 'Give item',
 );
 
 ?>

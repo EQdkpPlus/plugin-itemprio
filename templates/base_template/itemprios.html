@@ -31,11 +31,11 @@
 		<!-- IF S_DISTRIBUTE -->
 		
 		<td><!-- IF item_row.COUNT > 1 -->
-			<button type="submit" name="throw" value="<!-- BEGIN buyer_row -->{item_row.buyer_row.ID},<!-- END buyer_row -->"><i class="fa fa-cube"></i></button>
+			<button type="submit" title="{L_ip_throw}" name="throw" value="<!-- BEGIN buyer_row -->{item_row.buyer_row.ID},<!-- END buyer_row -->"><i class="fa fa-cube"></i></button>
 			
 			<!-- ELSE -->
 			<!-- BEGIN buyer_row -->
-			<button type="submit" name="save" value="{item_row.buyer_row.ID}"><i class="fa fa-check"></i></button>
+			<button type="submit" name="save" value="{item_row.buyer_row.ID}" title="{L_ip_give}"><i class="fa fa-check"></i></button>
 			<!-- END buyer_row -->
 			<!-- ENDIF -->
 		</td>
