@@ -118,6 +118,14 @@ class itemprio extends plugin_generic {
 
 		$this->pdh->process_hook_queue();
 	}
+	
+	public function post_install(){
+		$this->config->set(array(
+			'item_count' => 3,
+			'item_new_allgone' => 0,
+			'twinks' => 0,
+		), '', 'itemprio');
+	}
 
 	/**
 	* gen_admin_menu
