@@ -116,14 +116,16 @@ class itemprios_pageobject extends pageobject
   	
   	$intEventId = ($this->in->exists('event')) ? $this->in->get('event', 0) : (($intCountEvents === 1) ? $arrSavedEvents[0] : 0);  	
   	if($this->in->exists('calendarevent', 0)){
-  		$arrRaiddata = $this->pdh->get('calendar_events', 'data', array($this->in->exists('calendarevent', 0)));
+  		$intCalendarEvent = $this->in->get('calendarevent', 0);
+  		
+  		$arrRaiddata = $this->pdh->get('calendar_events', 'data', array($intCalendarEvent));
   		$myEventId = intval($arrRaiddata['extension']['raid_eventid']);
   		if($myEventId > 0 && isset($arrEvents[$myEventId])) $intEventId = $myEventId;
   		
-  		$attendees_raw	= $this->pdh->get('calendar_raids_attendees', 'attendees', array($this->in->exists('calendarevent', 0)));
+  		$attendees_raw	= $this->pdh->get('calendar_raids_attendees', 'attendees', array($intCalendarEvent));
   		
   		$raidcal_status = $this->config->get('calendar_raid_status');
-  		$raidstatus = array();
+
   		$minRaidstatus = 4;
   		if(is_array($raidcal_status)){
   			foreach($raidcal_status as $status){
@@ -135,7 +137,13 @@ class itemprios_pageobject extends pageobject
   		
   		foreach($attendees_raw as $intMemberID => $arrData){
   			if((int)$arrData['signup_status'] === $minRaidstatus){
-  				$arrMemberFilter[] = $intMemberID;
+  				if($this->config->get('twinks', 'itemprio')){
+  					$arrMemberFilter[] = $intMemberID;
+  				} else {
+  					//resolve main
+  					$intMain = $this->pdh->get('member', 'mainid', array($intMemberID));
+  					$arrMemberFilter[] = $intMain;
+  				}	
   			}
   		}
   	}
@@ -147,6 +155,7 @@ class itemprios_pageobject extends pageobject
   			'START_PICKER'	=> (new hdatepicker('date', array('value' => $intDate, 'timepicker' => true)))->output(),
   			'S_DISTRIBUTE' => $this->user->check_auth('a_itemprio_distribute', false),
   			'S_IP_CANUSE' => $this->user->check_auth('u_itemprio_use', false),
+  			'CALENDAREVENT_ID' => $this->in->get('calendarevent', 0),
 	));
 
   	$objQuery = $this->db->prepare("SELECT *
@@ -184,7 +193,11 @@ WHERE id IN (
   	foreach($arrMemberItems as $strKey => $arrItems){
   		$intCurrentPrio = PHP_INT_MAX;
   		foreach($arrItems as $arrItem)	{
-  			if(count($arrMemberFilter) && !in_array((int)$arrItem['memberid'], $arrMemberFilter)) continue;
+  			$intMemberID = (int)$arrItem['memberid'];
+  			
+  			if(count($arrMemberFilter) && !in_array($intMemberID, $arrMemberFilter)) continue;
+  			if(!$this->config->get('twinks', 'itemprio') && !$this->pdh->get('member', 'is_main', array($intMemberID))) continue;
+  			
   			
 	  		$arrItem['prio'] = intval($arrItem['prio']);
 	  		if($arrItem['prio'] < $intCurrentPrio){

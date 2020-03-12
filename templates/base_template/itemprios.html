@@ -44,7 +44,12 @@
 	</tr>
 	<!-- END item_row -->
 </table>
-<!-- ENDIF -->	
+<!-- ENDIF -->
+
+<!-- IF CALENDAREVENT_ID > 0 -->
+<input type="hidden" value="{CALENDAREVENT_ID}" name="calendarevent" />
+<!-- ENDIF -->
+
 {CSRF_TOKEN}
 </form>
 
