@@ -28,7 +28,7 @@ if (!defined('EQDKP_INC')){
   +--------------------------------------------------------------------------*/
 class itemprio extends plugin_generic {
 
-	public $version				= '1.0.1';
+	public $version				= '1.0.2';
 	public $build				= '';
 	public $copyright			= 'GodMod';
 
@@ -77,6 +77,7 @@ class itemprio extends plugin_generic {
 		
 		// -- Hooks -------------------------------------------
 		$this->add_hook('portal', 'itemprio_portal_hook', 'portal');
+		$this->add_hook('calendarevent_raid_menu', 'itemprio_calendarevent_raid_menu_hook', 'calendarevent_raid_menu');
 
 		//Routing
 		$this->routing->addRoute('Itemprios', 'itemprios', 'plugins/itemprio/page_objects');

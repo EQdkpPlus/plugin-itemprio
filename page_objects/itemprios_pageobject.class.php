@@ -112,7 +112,34 @@ class itemprios_pageobject extends pageobject
 
   	if(!$intDate) $intDate = $this->time->time;
   	
+  	$arrMemberFilter = array();
+  	
   	$intEventId = ($this->in->exists('event')) ? $this->in->get('event', 0) : (($intCountEvents === 1) ? $arrSavedEvents[0] : 0);  	
+  	if($this->in->exists('calendarevent', 0)){
+  		$arrRaiddata = $this->pdh->get('calendar_events', 'data', array($this->in->exists('calendarevent', 0)));
+  		$myEventId = intval($arrRaiddata['extension']['raid_eventid']);
+  		if($myEventId > 0 && isset($arrEvents[$myEventId])) $intEventId = $myEventId;
+  		
+  		$attendees_raw	= $this->pdh->get('calendar_raids_attendees', 'attendees', array($this->in->exists('calendarevent', 0)));
+  		
+  		$raidcal_status = $this->config->get('calendar_raid_status');
+  		$raidstatus = array();
+  		$minRaidstatus = 4;
+  		if(is_array($raidcal_status)){
+  			foreach($raidcal_status as $status){
+  				if((int)$status < $minRaidstatus) $minRaidstatus = (int)$status;
+  			}
+  		} else {
+  			$minRaidstatus = 0;
+  		}
+  		
+  		foreach($attendees_raw as $intMemberID => $arrData){
+  			if((int)$arrData['signup_status'] === $minRaidstatus){
+  				$arrMemberFilter[] = $intMemberID;
+  			}
+  		}
+  	}
+  	
   	
   	$this->tpl->assign_vars(array(
   			'EVENT_DROPDOWN' => (new hdropdown('event', array('options' => $arrEvents, 'js' => 'onchange="this.form.submit();"', 'value' => $intEventId)))->output(),
@@ -157,6 +184,8 @@ WHERE id IN (
   	foreach($arrMemberItems as $strKey => $arrItems){
   		$intCurrentPrio = PHP_INT_MAX;
   		foreach($arrItems as $arrItem)	{
+  			if(count($arrMemberFilter) && !in_array((int)$arrItem['memberid'], $arrMemberFilter)) continue;
+  			
 	  		$arrItem['prio'] = intval($arrItem['prio']);
 	  		if($arrItem['prio'] < $intCurrentPrio){
 	  			$intCurrentPrio = $arrItem['prio'];
