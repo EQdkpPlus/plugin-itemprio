@@ -28,7 +28,7 @@ if (!defined('EQDKP_INC')){
   +--------------------------------------------------------------------------*/
 class itemprio extends plugin_generic {
 
-	public $version				= '1.0.2';
+	public $version				= '1.0.3';
 	public $build				= '';
 	public $copyright			= 'GodMod';
 
@@ -124,6 +124,7 @@ class itemprio extends plugin_generic {
 		$this->config->set(array(
 			'item_count' => 3,
 			'item_new_allgone' => 0,
+			'item_new_allrequired' => 1,
 			'twinks' => 0,
 		), '', 'itemprio');
 	}

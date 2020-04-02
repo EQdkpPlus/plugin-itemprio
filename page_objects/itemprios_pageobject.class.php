@@ -221,7 +221,7 @@ WHERE id IN (
   		foreach($arrItems as $arrItem)	{
 	  		$this->tpl->assign_block_vars('item_row.buyer_row', array(
 	  				'ID'	=> $arrItem['id'],
-	  				'BUYER' => ($arrItem['prio']+1).'. - '.$this->pdh->get('member', 'name', array($arrItem['memberid'])),
+	  				'BUYER' => ($arrItem['prio']+1).'. - '.$this->pdh->geth('member', 'memberlink_decorated', array($arrItem['memberid'], register('routing')->simpleBuild('character'), '', true)),
 	  		));
   		}
   	}

@@ -106,6 +106,10 @@ class itemprioSettings extends page_generic
   						'type'		=> 'radio',
   						'default'	=> 0,
   				),
+  				'item_new_allrequired' => array(
+  						'type'		=> 'radio',
+  						'default'	=> 1,
+  				),
   		),
   			'general' => array(
   					'events' => array(

@@ -39,6 +39,7 @@ $lang = array(
 	'ip_f_item_new_allgone'		=> 'Neue Items dürfen erst eingetragen werden, wenn alle vorhandenen Items vergeben sind',
 	'ip_f_events'				=> 'Events auswählen',
 	'ip_f_twinks'				=> 'Item-Listen für Twinks',
+	'ip_f_item_new_allrequired' => 'Es müssen alle Items pro Event eingetragen werden',
 	'ip_view'					=> 'Ansehen',
 	'ip_use'					=> 'Prioritätenliste erstellen',
 	'ip_change_items'			=> 'Items auf den Listen austauschen',

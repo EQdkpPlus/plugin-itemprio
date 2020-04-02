@@ -222,6 +222,7 @@ WHERE id IN (
   			'S_IP_CHANGE'			=> ($this->user->check_auth('u_itemprio_change_items', false) && $blnCanChangeItems)  || $this->user->check_auths(array('a_itemprio_settings', 'a_itemprio_distribute'), 'OR', false),
   			'S_HINT_ALLGONE'		=> ($this->config->get('item_new_allgone', 'itemprio')),
   			'S_IP_TWINKS'			=> ($this->config->get('twinks', 'itemprio')),
+  			'S_IP_REQUIRED'			=> ($this->config->get('item_new_allrequired', 'itemprio')),
   	));
   	
 	$this->core->set_vars(array (

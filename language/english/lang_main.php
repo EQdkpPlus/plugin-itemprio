@@ -55,6 +55,7 @@ $lang = array(
 	'ip_notify_new_item_grouped' => 'You have received {COUNT} from your priority lists.',
 	'ip_throw'					=> 'Randomly give item',
 	'ip_give'					=> 'Give item',
+	'ip_f_item_new_allrequired' => 'All Items per Events are required',
 );
 
 ?>
