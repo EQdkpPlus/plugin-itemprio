@@ -28,7 +28,7 @@ if (!defined('EQDKP_INC')){
   +--------------------------------------------------------------------------*/
 class itemprio extends plugin_generic {
 
-	public $version				= '1.0.3';
+	public $version				= '1.1.0';
 	public $build				= '';
 	public $copyright			= 'GodMod';
 
@@ -86,6 +86,8 @@ class itemprio extends plugin_generic {
 		// -- Menu --------------------------------------------
 		$this->add_menu('admin', $this->gen_admin_menu());
 		$this->add_menu('main', $this->gen_main_menu());
+		
+		$this->tpl->css_file($this->root_path.'plugins/itemprio/templates/base_template/itemprio.css');
 	}
 
 	/**

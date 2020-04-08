@@ -120,6 +120,10 @@ class itemprioSettings extends page_generic
   							'type'		=> 'radio',
   							'default'	=> 1,
   					),
+  					'show_additional_buyers' => array(
+  							'type'		=> 'radio',
+  							'default'	=> 0,
+  					),
   			),
   	);
   	

@@ -54,7 +54,6 @@ class itemprios_pageobject extends pageobject
 	public function save(){
 		$this->user->check_auth('a_itemprio_distribute');
 		
-		
 		$intItemID = $this->in->get('save', 0);
 		
 		$this->pdh->put('itemprio', 'give', array($intItemID));
@@ -155,6 +154,7 @@ class itemprios_pageobject extends pageobject
   			'START_PICKER'	=> (new hdatepicker('date', array('value' => $intDate, 'timepicker' => true)))->output(),
   			'S_DISTRIBUTE' => $this->user->check_auth('a_itemprio_distribute', false),
   			'S_IP_CANUSE' => $this->user->check_auth('u_itemprio_use', false),
+  			'S_IP_SHOW_ADDITIONAL_BUYERS' => ($this->config->get('show_additional_buyers', 'itemprio')),
   			'CALENDAREVENT_ID' => $this->in->get('calendarevent', 0),
 	));
 
@@ -176,18 +176,19 @@ WHERE id IN (
   	if($objQuery){
   		while($row = $objQuery->fetchAssoc()){
   			if((int)$row['given'] == 1) continue;
-  			
-  			$cachedname = register('infotooltip')->getcacheditem($row['itemname'], $lang, $row['itemid'], false, true, $data);
-  			if($cachedname == false){
-  				$cachedname = $row['itemname'];
-  			}
+  			if(!strlen($row['itemname'])) continue;
 
+  			$cachedname = register('infotooltip')->getcacheditem(html_entity_decode($row['itemname']), $lang, $row['itemid'], false, true, $data);
+  			
+  			if($cachedname == false){
+  				$cachedname = html_entity_decode(utf8_strtolower($row['itemname']));
+  			} else {
+  				$cachedname = html_entity_decode(utf8_strtolower(strip_tags($cachedname)));
+  			}
+  			
   			$arrMemberItems[$cachedname][] = $row;
   		}
   	}
-  	
-  	
-  	#d($arrMemberItems);
   	
   	$arrPrioList = array();
   	foreach($arrMemberItems as $strKey => $arrItems){
@@ -211,19 +212,33 @@ WHERE id IN (
   		}
   	}
   	
-  	foreach($arrPrioList as $arrItems){
+  	foreach($arrPrioList as $strKey => $arrItems){
   		$this->tpl->assign_block_vars('item_row', array(
   				'ITEM' => infotooltip($arrItems[0]['itemname'], $arrItems[0]['itemid']),
   				'ITEMID' => $arrItems[0]['itemid'],
   				'COUNT' => count($arrItems),
+  				'S_IP_ADDITIONAL_BUYERS' => count($arrMemberItems[$strKey])-count($arrItems),
   		));
+  		
+  		$arrDone = array();
   		
   		foreach($arrItems as $arrItem)	{
 	  		$this->tpl->assign_block_vars('item_row.buyer_row', array(
 	  				'ID'	=> $arrItem['id'],
-	  				'BUYER' => ($arrItem['prio']+1).'. - '.$this->pdh->geth('member', 'memberlink_decorated', array($arrItem['memberid'], register('routing')->simpleBuild('character'), '', true)),
+	  				'BUYER' => '<span class="ip-prio-span">'.($arrItem['prio']+1).'. - </span>'.$this->pdh->geth('member', 'memberlink_decorated', array($arrItem['memberid'], register('routing')->simpleBuild('character'), '', true)),
 	  		));
+	  		$arrDone[] = $arrItem['memberid'];
   		}
+  		
+  		foreach($arrMemberItems[$strKey] as $arrItem){
+  			if(in_array($arrItem['memberid'], $arrDone)) continue;
+  			
+  			$this->tpl->assign_block_vars('item_row.buyer_all_row', array(
+  					'ID'	=> $arrItem['id'],
+  					'BUYER' => '<span class="ip-prio-span">'.($arrItem['prio']+1).'. - </span>'.$this->pdh->geth('member', 'memberlink_decorated', array($arrItem['memberid'], register('routing')->simpleBuild('character'), '', true)),
+  			));
+  		}
+  		
   	}
   	
   	infotooltip_js();

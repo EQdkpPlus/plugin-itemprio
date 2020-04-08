@@ -56,6 +56,8 @@ $lang = array(
 	'ip_notify_new_item_grouped' => 'Du hast {COUNT} Items von deiner Prioritätenliste erhalten.',
 	'ip_throw'					=> 'Item auswürfeln',
 	'ip_give'					=> 'Item vergeben',
+	'ip_additional_buyers'		=> 'Weitere Interessenten',
+	'ip_f_show_additional_buyers' => 'Zeige alle Interessenten eines Items an',
 );
 
 ?>

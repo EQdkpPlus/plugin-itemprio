@@ -1,0 +1,18 @@
+.ipallbuyers-h3 {
+	border-top: 1px solid @eqdkpContentBorderColor;
+	margin-top: 10px;
+}
+
+/* Hide the Prio Number */
+/*
+.ip-prio-span {
+	display: none;
+}
+*/
+
+/* Hide the additional chars headline */
+/*
+.ipallbuyers-h3 {
+	display: none;
+}
+*/

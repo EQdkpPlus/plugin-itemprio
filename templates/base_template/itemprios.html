@@ -26,6 +26,17 @@
 				{item_row.buyer_row.BUYER}
 			</div>
 			<!-- END buyer_row -->
+			
+			<!-- IF S_IP_SHOW_ADDITIONAL_BUYERS and item_row.S_IP_ADDITIONAL_BUYERS -->
+			<div class="ipallbuyers-container">
+				<h3 class="ipallbuyers-h3">{L_ip_additional_buyers}:</h3>
+			<!-- BEGIN buyer_all_row -->
+			<div>
+				{item_row.buyer_all_row.BUYER} <!-- IF S_DISTRIBUTE --><button type="submit" name="save" value="{item_row.buyer_all_row.ID}" title="{L_ip_give}" class="small"><i class="fa fa-check"></i></button><!-- ENDIF -->
+			</div>
+			<!-- END buyer_all_row -->
+			</div>
+			<!-- ENDIF -->
 		</td>
 		
 		<!-- IF S_DISTRIBUTE -->

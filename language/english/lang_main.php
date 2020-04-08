@@ -56,6 +56,8 @@ $lang = array(
 	'ip_throw'					=> 'Randomly give item',
 	'ip_give'					=> 'Give item',
 	'ip_f_item_new_allrequired' => 'All Items per Events are required',
+	'ip_additional_buyers'		=> 'Other interested characters',
+	'ip_f_show_additional_buyers' => 'Show all interested characters for an item',
 );
 
 ?>
