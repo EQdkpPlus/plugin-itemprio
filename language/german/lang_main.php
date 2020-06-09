@@ -58,6 +58,7 @@ $lang = array(
 	'ip_give'					=> 'Item vergeben',
 	'ip_additional_buyers'		=> 'Weitere Interessenten',
 	'ip_f_show_additional_buyers' => 'Zeige alle Interessenten eines Items an',
+	'ip_no_chars'				=> 'Du benötigst einen Charakter, um Items auf der Prioritätenliste hinzuzufügen',
 		
 	'user_sett_fs_notifications_itemprio' => "Item-Prioritätenliste",
 	'user_sett_f_ntfy_itemprio_new_item' => "Item erhalten",

@@ -58,6 +58,7 @@ $lang = array(
 	'ip_f_item_new_allrequired' => 'All Items per Events are required',
 	'ip_additional_buyers'		=> 'Other interested characters',
 	'ip_f_show_additional_buyers' => 'Show all interested characters for an item',
+	'ip_no_chars'				=> 'You have to create an character in order to add items for your char on the priority list.',
 		
 		'user_sett_fs_notifications_itemprio' => "Item Priority list",
 		'user_sett_f_ntfy_itemprio_new_item' => "Item received",

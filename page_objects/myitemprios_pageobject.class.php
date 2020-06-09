@@ -53,7 +53,6 @@ class myitemprios_pageobject extends pageobject
 	
 	public function save(){
 		$intEventID = $this->in->get('event', 0);
-		$intCharID = $this->user->id;
 		
 		$arrItems = $this->in->getArray('item');
 		
@@ -120,6 +119,12 @@ WHERE id IN (
   	foreach($arrCharacterIDs as $intCharId){
   		$arrCharacters[$intCharId] = $this->pdh->get('member', 'name', array($intCharId));
   	}
+  	
+  	if(count($arrCharacters) === 0 ){
+  		message_die($this->user->lang('ip_no_chars'));
+  	}
+  	
+  	
   	$intMainID	= $this->pdh->get('member', 'mainchar', array($this->user->id));
   	
   	$intEventId = ($this->in->exists('event')) ? $this->in->get('event', 0) : (($intCountEvents === 1) ? $arrSavedEvents[0] : 0);
