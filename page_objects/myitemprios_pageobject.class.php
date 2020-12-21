@@ -149,6 +149,7 @@ WHERE id IN (
   	
   	$arrMemberItemsPrio =  array();
   	$intGiven = 0;
+  	$item_ids = $item_names = array();
   	
   	if($objQuery){
   		while($row = $objQuery->fetchAssoc()){
